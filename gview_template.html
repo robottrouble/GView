@@ -1,0 +1,42 @@
+<html>
+<script>
+	var totalLayers  = %%TOTAL_LAYERS%%;
+	var currentLayer = 1;
+    var file_prefix  = "%%FILE_PREFIX%%";
+
+	function change_layer(inc) {
+		if ( currentLayer + inc < totalLayers + 1 && currentLayer + inc > 0 )
+			currentLayer += inc;
+
+		document.getElementById('current_layer').value=currentLayer;
+		var content = document.getElementById('content');
+		var newFilePath = file_prefix + currentLayer + ".svg";
+		var embed = document.createElement('embed');
+		embed.setAttribute('width', "100%");
+		embed.setAttribute('height', "100%");
+		embed.setAttribute('src', newFilePath);
+
+		while ( content.childNodes.length >= 1 )
+		{
+			content.removeChild( content.firstChild );       
+		} 
+		content.appendChild(embed);
+	}
+</script>
+<body bgcolor="#C0C0C0" onload="change_layer(0);">
+<table width="100%" height="100%" bgcolor="#C0C0C0">
+  <tr>
+    <td align="center">
+	  <a href="#">&lt;&lt;</a> <a href="#" onclick="change_layer(-1);">&lt;</a>&nbsp;&nbsp;Current Layer: <input type="text" id="current_layer" name="current_layer" value="1" size="3">&nbsp;&nbsp;<a href="#" onclick="change_layer(1);">&gt;</a> <a href="#">&gt;&gt;</a>
+	</td>
+  </tr>
+  <tr height="100%">
+    <td>
+		<div STYLE="height:100%" id="content">
+		</div>
+	</td>
+  </tr>
+</table>
+</body>
+</html>
+
